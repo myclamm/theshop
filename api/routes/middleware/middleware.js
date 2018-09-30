@@ -17,10 +17,13 @@ module.exports = {
 
     },
     staticFiles: function (app, express) {
+        console.log('hi')
+        console.log('process.env',process.env.NODE_ENV )
         // Serve React Client in Prod
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV === 'production') {
             let appDir = path.dirname(require.main.filename);
             // Serve static files
+            console.log('path',path.join(appDir, '/client/build'))
             app.use(express.static(path.join(appDir, '/client/build')));
             // Redirect to index.html
             app.get('*', (req, res) => {
