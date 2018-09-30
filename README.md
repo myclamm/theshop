@@ -1,4 +1,4 @@
-## Basic Overview  [Live Demo](link)
+## Basic Overview  - [Live Demo](link)
 
 Simple shopping cart app with checkout functionality using Stripe.
 
