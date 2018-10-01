@@ -11,13 +11,12 @@ const port = process.env.PORT || 8000;
 
 // Add App-level Middleware
 Middleware.utilities(app, router);
-// Add static file handlers
-Middleware.staticFiles(app, express);
 // Add API routes
 Routes.registerRoutes(app, router);
+// Add static file handlers
+Middleware.staticFiles(app, express);
 // Add Error Handler
 Middleware.errorHandler(app)
-
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI,{ useNewUrlParser: true });
 

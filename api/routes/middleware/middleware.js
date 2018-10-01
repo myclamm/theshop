@@ -12,23 +12,20 @@ module.exports = {
         app.use(cors());
         // Use morgan to log requests to the console
         app.use(morgan('dev'));
-        // Prefix all API endpoints with api/a
+        // Prefix all API endpoints with api
         app.use('/api', router);
-
     },
     staticFiles: function (app, express) {
-        console.log('hi')
-        console.log('process.env',process.env.NODE_ENV )
+        
         // Serve React Client in Prod
         if (process.env.NODE_ENV === 'production') {
             let appDir = path.dirname(require.main.filename);
             // Serve static files
-            console.log('path',path.join(appDir, '/client/build'))
             app.use(express.static(path.join(appDir, '/client/build')));
             // Redirect to index.html
             app.get('*', (req, res) => {
                 res.sendFile(path.join(appDir, 'client', 'build', 'index.html'));
-              });
+            });
         }
     },
     authenticate: function () {
@@ -39,14 +36,12 @@ module.exports = {
     },
     errorHandler: function (app) {
         app.use(function (err, req, res, next) {
+            console.log(err)
             let response = {
-                message: err.message                        
+                message: err.message,
+                error: err                       
             };
-            // Return full error in dev
-            if (process.env.NODE_ENV !== 'production') {
-                console.error(err)
-                response.error = err;
-            }
+
             res.status(err.status || 500)
                 .json(response);
         });
