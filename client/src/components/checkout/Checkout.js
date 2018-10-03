@@ -52,7 +52,6 @@ class Checkout extends Component {
 			</ModalBody>
 
 			<ModalFooter>
-				<div>Total: ${ cart.total }</div>
 			</ModalFooter>
 
 			</Modal>
