@@ -19,6 +19,7 @@ class ProductCard extends React.Component {
         }
         
         this.goToProductPage = () => {
+            console.log('clicked')
             this.props.history.push('/'+product.uri)
         }
     }
@@ -41,7 +42,7 @@ class ProductCard extends React.Component {
             <Card className="product-card" style={{height:"100%", width:"100%"}}>
                 <Image src={cardImage} onClick={ this.goToProductPage }/>
 
-                <Card.Content className="cardContent">
+                <Card.Content className="cardContent" onClick={ this.goToProductPage }>
                     <Card.Header>{title}</Card.Header>
                     <Card.Meta>
                         <span>{company}</span>

@@ -22,7 +22,7 @@ class Product extends Component {
   
           <div className="col-lg-3">
             <h1 className="my-4">{ product.company }</h1>
-            <Button onClick={this.addToCart}>Buy Now</Button>
+            <Button style={{backgroundColor:"#3ecf8e",borderColor:"#3ecf8e"}} onClick={this.addToCart}>Buy Now</Button>
           </div>
           
   
@@ -41,18 +41,11 @@ class Product extends Component {
             
             <div className="card card-outline-secondary my-4">
               <div className="card-header">
-                Product Reviews
+                Product Description
               </div>
               <div className="card-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small className="text-muted">Posted by Anonymous on 3/1/17</small>
-                <hr/>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small className="text-muted">Posted by Anonymous on 3/1/17</small>
-                <hr/>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small className="text-muted">Posted by Anonymous on 3/1/17</small>
-                <hr/>
+                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+                  <p>Solet vocent no pro, et nam erat eripuit, per te iusto officiis assueverit. Mei sint apeirian an, an his nonumy utamur ocurreret. Cum impedit facilis quaerendum te, oportere tractatos ius at. Adhuc malis duo at. Et adhuc vocibus pri. Iisque vidisse eu has. Utinam scaevola eos ne, meis justo eum eu.</p>
               </div>
             </div>
             {/* Card  */}

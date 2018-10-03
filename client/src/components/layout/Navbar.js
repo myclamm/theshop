@@ -19,8 +19,8 @@ class Navbar extends Component {
 
             <ul className="navbar-nav ml-auto">
               
-              <li className="nav-item" style={{cursor:'pointer',color:'#3ecf8e'}} onClick={showCart}>
-                <span>View Cart</span> <Icon name='shopping cart' size="big"/>
+              <li className="nav-item"  onClick={showCart}>
+                <span style={{color:'#fff'}}>View Cart</span> <Icon style={{cursor:'pointer',color:'#3ecf8e'}} name='shopping cart' size="big"/>
               </li>
               
 

@@ -111,7 +111,7 @@ class App extends Component {
         <Router>
           <div className="App">
             <Cart cart={this.state.cart} hideCart={this.hideCart} removeFromCart={this.removeFromCart} showCheckout={ this.showCheckout } />
-            <Checkout cart={ this.state.cart } checkout={this.state.checkout} hideCheckout={this.hideCheckout} removeFromCart={this.removeFromCart}/>
+            <Checkout cart={ this.state.cart } checkout={this.state.checkout} hideCheckout={this.hideCheckout} removeFromCart={this.removeFromCart} showCart={this.showCart}/>
             <Navbar cart={this.state.cart} showCart={this.showCart} hideCart={this.hideCart}/>
             <Route exact path="/" render={
               (props) => <Products products={this.state.products} addToCart={this.addToCart} showCart={this.showCart}/>

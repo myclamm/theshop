@@ -22,12 +22,11 @@ class Cart extends React.Component {
     const { cart, cartTotal, removeFromCart } = this.props;
     
     return (
-      <div>
         <Modal isOpen={cart.show}>
-          <ModalHeader size="lg">
-           My Cart
-          </ModalHeader>
-
+          <div className="modal-header">
+          <h2>My Cart</h2>
+          <span onClick={this.hideCart} style={{cursor:"pointer",float:"right"}}>Close</span>
+          </div>
           <ModalBody>
               {cart.items.length === 0 ? "Your cart is empty" :null  }
               <CartItems cart={ cart } removeFromCart={ removeFromCart }/>
@@ -41,12 +40,11 @@ class Cart extends React.Component {
             <Button variant="secondary" onClick={this.hideCart}>
               Close
             </Button>
-            <Button variant="primary" onClick={this.checkout}>
+            <Button style={{backgroundColor:"#3ecf8e",borderColor:"#3ecf8e"}} variant="primary" onClick={this.checkout}>
               Checkout
             </Button>
           </ModalFooter>
         </Modal>
-      </div>
     );
   }
 }
