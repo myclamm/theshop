@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
-import {Elements, StripeProvider} from 'react-stripe-elements';
-import 'semantic-ui-css/semantic.min.css'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-
-import Navbar from './components/layout/Navbar';
+import Navbar from './components/navbar/Navbar';
 import Products from './components/products/Products';
 import Product from './components/products/Product';
 import Cart from './components/cart/Cart';
 import API from './services/apiService.js';
 import Checkout from './components/checkout/Checkout';
-// Import css styles
+
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 
@@ -40,13 +37,13 @@ class App extends Component {
       return accum + curr.price;
     },0);
     
-    // Never mutate state. Instead, perform full copy
+    // Tip: Never mutate state. Instead, perform full copy and re-assign.
     const state = Object.assign({},this.state);
     state.cart.total = total;
     this.setState(state);
-
   }
 
+  // Add an item to cart
   addToCart= (product) => {
     const state = Object.assign({},this.state);
     state.cart.items.push(product);
@@ -54,6 +51,7 @@ class App extends Component {
     this.updateCartTotal();
   }
 
+  // Remove an item from cart
   removeFromCart = (index) => {
     const state = Object.assign({},this.state);
     state.cart.items.splice(index, 1)
@@ -61,6 +59,7 @@ class App extends Component {
     this.updateCartTotal();
   }
 
+  // Display cart to user
   showCart = () => {
     const state = Object.assign({},this.state);
     state.cart.show = true;
@@ -86,6 +85,8 @@ class App extends Component {
     this.setState(state)
   }
 
+  // Create routes for each individual product page
+  // Invoked when App loads.
   createProductPages = (addToCart, showCart) => {
     if(!this.state.products){
       return
@@ -99,6 +100,7 @@ class App extends Component {
     })
   }
 
+  // Fetch list of products from server
   componentWillMount() {
     API.getProducts()
       .then(res=>{
@@ -106,13 +108,14 @@ class App extends Component {
         console.log('received products',this.state.products)
       })
   }
+
   render() {
     return (
         <Router>
           <div className="App">
             <Cart cart={this.state.cart} hideCart={this.hideCart} removeFromCart={this.removeFromCart} showCheckout={ this.showCheckout } />
             <Checkout cart={ this.state.cart } checkout={this.state.checkout} hideCheckout={this.hideCheckout} removeFromCart={this.removeFromCart} showCart={this.showCart}/>
-            <Navbar cart={this.state.cart} showCart={this.showCart} hideCart={this.hideCart}/>
+            <Navbar showCart={this.showCart}/>
             <Route exact path="/" render={
               (props) => <Products products={this.state.products} addToCart={this.addToCart} showCart={this.showCart}/>
               }
