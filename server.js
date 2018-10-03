@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Middleware = require('./api/routes/middleware/middleware.js')
-const Routes = require('./api/routes/index.js')
+const Middleware = require('./server/routes/middleware/middleware.js')
+const Routes = require('./server/routes/index.js')
 require('dotenv').load();
 
 

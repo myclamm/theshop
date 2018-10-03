@@ -1,28 +1,55 @@
-.App {
-  text-align: center;
+img {
+  width: 100%;
+}
+.checkout-form {
+  background-color: #f7f7fa;
+  border: solid 1px #e2e2e8;
+  padding: 2px 6px 2px 6px;
+  border-radius: 5px;
+  margin:3px;
+}
+.product-card {
+  cursor:pointer
+}
+.product-card:hover {
+  box-shadow: 0 0 11px #3E3D3D;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.navbar {
+  color: #1EA5FB
+}
+.landing {
+  position: relative;
+  background: url('./img/test.png') no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  margin-top: -24px;
+  margin-bottom: -50px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.landing-inner {
+  padding-top: 80px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.App-intro {
-  font-size: large;
+.card-form {
+  opacity: 0.9;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.latest-profiles-img {
+  width: 40px;
+  height: 40px;
+}
+
+.form-control::placeholder {
+  color: #bbb !important;
 }
