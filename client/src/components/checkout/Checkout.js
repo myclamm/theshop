@@ -1,24 +1,14 @@
 import React, { Component } from 'react'
 import {Modal,  ModalBody, ModalFooter } from 'reactstrap';
 import {Divider} from 'semantic-ui-react'
-import {Elements, StripeProvider} from 'react-stripe-elements';
 
-import CheckoutForm from './CheckoutForm';
+import StripeCheckoutForm from '../Stripe/StripeCheckoutForm';
 import CartItems from '../cart/CartItems';
-import API from '../../services/apiService';
 
 class Checkout extends Component {
 	constructor(props) {
 		super(props);
 		const {showCart, hideCheckout} = this.props;
-
-		this.checkout = (ev) => {
-			// User clicked submit
-			API.checkout(this.props.stripe)
-				.then(res=>{
-				console.log('success', res)
-				})
-		}
 
 		this.backToCart = () => {
 			hideCheckout();
@@ -42,13 +32,7 @@ class Checkout extends Component {
 				<Divider/>
 				<div style={{textAlign:"right"}}>Total: ${ cart.total }</div>
 				<Divider/>
-				<StripeProvider style={{marginRight:"20%"}}apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
-					<div className="example">
-					<Elements>
-							<CheckoutForm cart={ cart }/>
-					</Elements>
-					</div>
-				</StripeProvider>
+				<StripeCheckoutForm cart={ cart } />
 			</ModalBody>
 
 			<ModalFooter>

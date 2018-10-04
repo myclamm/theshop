@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Button } from 'reactstrap';
-import API from '../../services/apiService';
 
 import {
   CardNumberElement,
@@ -9,25 +8,10 @@ import {
   PostalCodeElement,
   injectStripe} from 'react-stripe-elements';
 
-class CheckoutForm extends Component {
-  constructor(props) {
-    super(props);
-    const { cart } = this.props
-
-    this.submit = ()=> {
-      this.checkout(this.props.stripe, cart);
-    }
-  }
-
-  checkout(stripe, cart) {
-    // User clicked submit
-    API.checkout(stripe,cart)
-      .then(res=>{
-        console.log('success', res)
-      })
-  }
+class FormElements extends Component {
 
   render() {
+    const { onSubmit, cart } = this.props;
     return (
       <div className="checkout">
         <h2>Checkout</h2>
@@ -41,7 +25,7 @@ class CheckoutForm extends Component {
         <small>Postal Code</small>
         <div className="checkout-form"><PostalCodeElement/></div>
         <br></br>
-        <Button onClick={ this.submit } style={{backgroundColor:"#3ecf8e",borderColor:"#3ecf8e"}} variant="primary">
+        <Button onClick={ onSubmit(this.props.stripe, cart) } style={{backgroundColor:"#3ecf8e",borderColor:"#3ecf8e"}} variant="primary">
             Submit
         </Button>
       </div>
@@ -49,4 +33,5 @@ class CheckoutForm extends Component {
   }
 }
 
-export default injectStripe(CheckoutForm);
+// injectStripe injects "Stripe Object" into this.props
+export default injectStripe(FormElements);

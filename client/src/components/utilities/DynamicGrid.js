@@ -20,7 +20,9 @@ class RepeatRows extends Component {
 			}
 		})
 		// If leftover cols, create final row
-		cols.length ? temp_rows.push((<Row key={'last row'}>{ temp_cols }</Row>)) : null
+		if (cols.length) {
+			temp_rows.push(<Row key={'last row'}>{ temp_cols }</Row>)
+		}
 		
 		return temp_rows;
 	}

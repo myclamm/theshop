@@ -92,7 +92,6 @@ class App extends Component {
       return
     }
     return this.state.products.map(function(product, index){
-      console.log('addToCart', addToCart)
       return (<Route key={index+"route"} exact path={"/"+product.uri} render={
         (props) => <Product product={product} addToCart={addToCart} showCart={showCart}/>
         }
@@ -105,7 +104,6 @@ class App extends Component {
     API.getProducts()
       .then(res=>{
         this.setState({products: res.data})
-        console.log('received products',this.state.products)
       })
   }
 

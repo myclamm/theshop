@@ -36,7 +36,7 @@ module.exports = {
     },
     errorHandler: function (app) {
         app.use(function (err, req, res, next) {
-            console.log(err)
+            console.log('Error caught',err)
             let response = {
                 message: err.message,
                 error: err                       
