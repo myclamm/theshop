@@ -7,6 +7,7 @@ import Product from './components/products/Product';
 import Cart from './components/cart/Cart';
 import API from './services/apiService.js';
 import Checkout from './components/checkout/Checkout';
+import ThankYou from './components/thankYou/ThankYou';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
@@ -15,17 +16,24 @@ class App extends Component {
   constructor() {
     super()
 
-    // Global App state
+    // Global App state, separated by components
     this.state = {
-      currentProduct: null,
       products: [],
+
       cart: {
         total: 0,
         show: false,
         items: []
       },
+
       checkout: {
         show: false
+      },
+
+      thankYou: {
+				total: 0,
+        show: false,
+        purchasedItems: []
       }
     }
 
@@ -33,7 +41,7 @@ class App extends Component {
 
   // CART METHODS
   updateCartTotal = () => {
-    const total = this.state.cart.items.reduce((accum,curr,index,arr)=>{
+    const total = this.state.cart.items.reduce((accum,curr)=>{
       return accum + curr.price;
     },0);
     
@@ -63,20 +71,29 @@ class App extends Component {
   showCart = () => {
     const state = Object.assign({},this.state);
     state.cart.show = true;
-    this.setState(state)
+    this.setState(state);
   }
 
+  // Hide cart
   hideCart = () => {
     const state = Object.assign({},this.state);
     state.cart.show = false;
-    this.setState(state)
+    this.setState(state);
+  }
+
+  // Empty the cart
+  clearCart = () => {
+    const state = Object.assign({}, this.state);
+    state.cart.items = [];
+		this.setState(state);
+		this.updateCartTotal();
   }
 
   // CHECKOUT METHODS
   showCheckout = () => {
     const state = Object.assign({},this.state);
     state.checkout.show = true;
-    this.setState(state)
+    this.setState(state);
   }
 
   hideCheckout = () => {
@@ -85,19 +102,49 @@ class App extends Component {
     this.setState(state)
   }
 
+  // THANKYOU METHODS
+  showThankYou = (confirmationId, purchasedItems, total) => {
+    const state = Object.assign({},this.state);
+    state.thankYou.show = true;
+    state.thankYou.purchasedItems = purchasedItems;
+		state.thankYou.confirmationId = confirmationId;
+		state.thankYou.total = total;
+		console.log('confirmationId:',confirmationId)
+		console.log('purchasedItems', purchasedItems)
+    this.setState(state);
+	}
+	
+  hideThankYou = () => {
+    const state = Object.assign({},this.state);
+    state.thankYou.show = false;
+    this.setState(state)
+  }
+
   // Create routes for each individual product page
-  // Invoked when App loads.
   createProductPages = (addToCart, showCart) => {
     if(!this.state.products){
       return
     }
-    return this.state.products.map(function(product, index){
-      return (<Route key={index+"route"} exact path={"/"+product.uri} render={
-        (props) => <Product product={product} addToCart={addToCart} showCart={showCart}/>
-        }
+    return this.state.products.map((product, index) => {
+      return (
+      <Route key={index+"route"} exact path={"/"+product.uri} render={(props) => 
+        <Product 
+          product={product} 
+          addToCart={addToCart} 
+          showCart={showCart}/>}
       />)
     })
   }
+
+	componentDidMount() {
+    this.hydrateStateWithLocalStorage();
+    // add event listener to save state to localStorage
+    // when user leaves/refreshes the page
+    window.addEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+	}
 
   // Fetch list of products from server
   componentWillMount() {
@@ -107,18 +154,73 @@ class App extends Component {
       })
   }
 
+  componentWillUnmount() {
+    window.removeEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+
+    // saves if component has a chance to unmount
+    this.saveStateToLocalStorage();
+	} 
+	
+	hydrateStateWithLocalStorage() {
+    // for all items in state
+    for (let key in this.state) {
+      // if the key exists in localStorage
+      if (localStorage.hasOwnProperty(key)) {
+        // get the key's value from localStorage
+        let value = localStorage.getItem(key);
+
+        // parse the localStorage string and setState
+        try {
+          value = JSON.parse(value);
+          this.setState({ [key]: value });
+        } catch (e) {
+          // handle empty string
+          this.setState({ [key]: value });
+        }
+      }
+    }
+	}
+	
+  saveStateToLocalStorage() {
+    // for every item in React state
+    for (let key in this.state) {
+      // save to localStorage
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
+  }
+
   render() {
     return (
         <Router>
           <div className="App">
-            <Cart cart={this.state.cart} hideCart={this.hideCart} removeFromCart={this.removeFromCart} showCheckout={ this.showCheckout } />
-            <Checkout cart={ this.state.cart } checkout={this.state.checkout} hideCheckout={this.hideCheckout} removeFromCart={this.removeFromCart} showCart={this.showCart}/>
-            <Navbar showCart={this.showCart}/>
-            <Route exact path="/" render={
-              (props) => <Products products={this.state.products} addToCart={this.addToCart} showCart={this.showCart}/>
-              }
+            <Cart 
+              cart={ this.state.cart } 
+              hideCart={ this.hideCart } 
+              removeFromCart={ this.removeFromCart } 
+              showCheckout={ this.showCheckout } />
+            <Checkout 
+              cart={ this.state.cart } 
+              checkout={ this.state.checkout } 
+              hideCheckout={ this.hideCheckout } 
+              removeFromCart={ this.removeFromCart } 
+              showCart={ this.showCart } 
+              clearCart={ this.clearCart } 
+              showThankYou={ this.showThankYou } />
+            <ThankYou 
+              thankYou={ this.state.thankYou }
+              hideThankYou={ this.hideThankYou } />
+            <Navbar 
+              showCart={ this.showCart }/>
+            <Route exact path="/" render={(props) => 
+              <Products 
+              products={ this.state.products } 
+              addToCart={ this.addToCart } 
+              showCart={ this.showCart }/>}
             />
-            {this.createProductPages(this.addToCart, this.showCart)}
+            { this.createProductPages(this.addToCart, this.showCart) }
           </div>
         </Router>
     );

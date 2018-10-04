@@ -27,7 +27,7 @@ class Cart extends React.Component {
 				</div>
 				<ModalBody>
 					{cart.items.length === 0 ? "Your cart is empty" :null  }
-					<CartItems cart={ cart } removeFromCart={ removeFromCart }/>
+					<CartItems items={ cart.items } removeFromCart={ removeFromCart } removable="true"/>
 				</ModalBody>
 
 				<ModalFooter>

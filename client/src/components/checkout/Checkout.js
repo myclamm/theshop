@@ -2,22 +2,37 @@ import React, { Component } from 'react'
 import {Modal,  ModalBody, ModalFooter } from 'reactstrap';
 import {Divider} from 'semantic-ui-react'
 
-import StripeCheckoutForm from '../Stripe/StripeCheckoutForm';
+import StripeCheckoutForm from '../stripe/StripeCheckoutForm';
 import CartItems from '../cart/CartItems';
 
 class Checkout extends Component {
 	constructor(props) {
 		super(props);
-		const {showCart, hideCheckout} = this.props;
+		const { cart, showCart, hideCheckout, showThankYou, clearCart } = this.props;
 
 		this.backToCart = () => {
+			// User clicks "back to cart" button
 			hideCheckout();
 			showCart();
 		}
+
+		this.checkoutHandler = (err, confirmationId, cart, total) => {
+			// Stripe checkout completed
+			if (err) return alert(err);
+			console.log('cart',cart)
+			const purchasedItems = cart.items.slice();
+			console.log('purchasedItems',purchasedItems)
+			// Empty the cart, close the checkout page, show thank you page
+			clearCart();
+			hideCheckout();
+			showThankYou(confirmationId, purchasedItems, total);
+			
+		}
+
 	}
                      
 	render() {
-		const {cart, hideCheckout, checkout} = this.props
+		const { cart, hideCheckout, checkout, removeFromCart } = this.props
 
 		return (
 			<Modal isOpen={checkout.show} toggle={hideCheckout}>
@@ -28,11 +43,11 @@ class Checkout extends Component {
 
 			<ModalBody>
 				{cart.items.length === 0 ? "Your cart is empty" :null  }
-				<CartItems cart={ cart } checkout="true"/>
+				<CartItems items={ cart.items } removeFromCart={ removeFromCart } removable="true"/>
 				<Divider/>
 				<div style={{textAlign:"right"}}>Total: ${ cart.total }</div>
 				<Divider/>
-				<StripeCheckoutForm cart={ cart } />
+				<StripeCheckoutForm cart={ cart } hideCheckout={ hideCheckout } checkoutHandler={ this.checkoutHandler } />
 			</ModalBody>
 
 			<ModalFooter>

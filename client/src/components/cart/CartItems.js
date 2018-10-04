@@ -2,39 +2,38 @@ import React from 'react'
 import { Item, Icon} from 'semantic-ui-react';
 
 class CartItems extends React.Component{
-	// Used to display items in a cart
+	// Used to display rows of cart items
 	
 	constructor(props) {
 		super(props);
-		const {removeFromCart, checkout} = this.props;
+		const {removeFromCart, removable} = this.props;
 
 		this.removeFromCart = (index) => {
 			return () => removeFromCart(index);
 		}
 		
-		// Shows "x" if user is viewing cart and "check" if viewing checkout modal
 		this.renderIcon = (index) => {
-			if (checkout) {
-				return (
-					<span style={ {float:'right', color:'#3ecf8e'} }> 
-						<span><Icon name='check' /></span>
-					</span>
-				)
-			} else {
+			if (removable) {
 				return (
 					<span onClick={ this.removeFromCart(index) } style={ {float:'right'} }> 
 						<span><Icon name='close' /></span>
 					</span>
 				)
+			} else {
+					return (
+						<span style={ {float:'right', color:'#3ecf8e'} }> 
+							<span><Icon name='check' /></span>
+						</span>
+					)
 			}
 		}
 	}
 
 	render() {
 			// Extract props from parent
-		const { cart } = this.props;
+		const { items } = this.props;
 
-		const CartItems = cart.items.map((product,index)=> {
+		const CartItems = items.map((product,index)=> {
 			return (
 				<Item.Group key={ index+'key' }>
 					<Item>
