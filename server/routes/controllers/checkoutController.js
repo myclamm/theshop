@@ -10,8 +10,6 @@ const CheckoutController = {
 			return accum + curr.price;
 		},0);
 
-		console.log('order total',order_total)
-		console.log('token',transaction_token)
 		// Initiate Stripe Checkout
 		stripe.charges.create({
 			amount:order_total*100,
@@ -19,13 +17,10 @@ const CheckoutController = {
 			source: transaction_token,
 			metadata: {qty: cart.items.length}
 		}, function (err, charge) {
-			console.log('err',err)
-			console.log('charge',charge)
 			if (err) return next()
 			return res.send({charge:charge})
 		})
 
-		// return res.send({total:order_total})
 	}
 };
 

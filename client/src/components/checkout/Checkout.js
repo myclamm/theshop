@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Modal,  ModalBody, ModalFooter } from 'reactstrap';
 import {Divider} from 'semantic-ui-react'
 
-import StripeCheckoutForm from '../stripe/StripeCheckoutForm';
+import StripeCheckoutForm from '../Stripe/StripeCheckoutForm.js';
 import CartItems from '../cart/CartItems';
 
 class Checkout extends Component {
