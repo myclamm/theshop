@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import SimpleStorage from "react-simple-storage";
 
 import Navbar from './components/navbar/Navbar';
 import Products from './components/products/Products';
@@ -136,16 +137,6 @@ class App extends Component {
     })
   }
 
-	componentDidMount() {
-    this.hydrateStateWithLocalStorage();
-    // add event listener to save state to localStorage
-    // when user leaves/refreshes the page
-    window.addEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    );
-	}
-
   // Fetch list of products from server
   componentWillMount() {
     API.getProducts()
@@ -154,48 +145,13 @@ class App extends Component {
       })
   }
 
-  componentWillUnmount() {
-    window.removeEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    );
-
-    // saves if component has a chance to unmount
-    this.saveStateToLocalStorage();
-	} 
-	
-	hydrateStateWithLocalStorage() {
-    // for all items in state
-    for (let key in this.state) {
-      // if the key exists in localStorage
-      if (localStorage.hasOwnProperty(key)) {
-        // get the key's value from localStorage
-        let value = localStorage.getItem(key);
-
-        // parse the localStorage string and setState
-        try {
-          value = JSON.parse(value);
-          this.setState({ [key]: value });
-        } catch (e) {
-          // handle empty string
-          this.setState({ [key]: value });
-        }
-      }
-    }
-	}
-	
-  saveStateToLocalStorage() {
-    // for every item in React state
-    for (let key in this.state) {
-      // save to localStorage
-      localStorage.setItem(key, JSON.stringify(this.state[key]));
-    }
-  }
-
   render() {
     return (
         <Router>
           <div className="App">
+						{/* Sync state with webstorage */}
+						<SimpleStorage parent={this} />
+
             <Cart 
               cart={ this.state.cart } 
               hideCart={ this.hideCart } 
