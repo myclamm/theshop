@@ -8,7 +8,7 @@ import CartItems from '../cart/CartItems';
 class Checkout extends Component {
 	constructor(props) {
 		super(props);
-		const { cart, showCart, hideCheckout, showThankYou, clearCart } = this.props;
+		const { showCart, hideCheckout, showThankYou, clearCart } = this.props;
 
 		this.backToCart = () => {
 			// User clicks "back to cart" button
@@ -19,9 +19,7 @@ class Checkout extends Component {
 		this.checkoutHandler = (err, confirmationId, cart, total) => {
 			// Stripe checkout completed
 			if (err) return alert(err);
-			console.log('cart',cart)
 			const purchasedItems = cart.items.slice();
-			console.log('purchasedItems',purchasedItems)
 			// Empty the cart, close the checkout page, show thank you page
 			clearCart();
 			hideCheckout();
