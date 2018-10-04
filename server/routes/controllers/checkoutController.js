@@ -1,6 +1,6 @@
 require('dotenv').load();
-const Product = require('../../models/product.js');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripeService = require('../../services/stripe.js');
+
 const CheckoutController = {
 
 	checkoutCart: function(req, res, next) {
@@ -9,14 +9,16 @@ const CheckoutController = {
 		const order_total = cart.items.reduce((accum,curr)=>{
 			return accum + curr.price;
 		},0);
-
-		// Initiate Stripe Checkout
-		stripe.charges.create({
+		
+		const chargeObj = {
 			amount:order_total*100,
 			currency:"usd",
 			source: transaction_token,
 			metadata: {qty: cart.items.length}
-		}, function (err, charge) {
+		}
+
+		// Initiate Stripe Checkout
+		stripeService.createCharge(chargeObj, (err, charge) => {
 			if (err) return next()
 			return res.send({charge:charge})
 		})

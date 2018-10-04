@@ -6,9 +6,10 @@ const API = {
 }
 
 function getProducts () {
+	// Returns a promise
 	return axios
 		.get('api/products')
-		.catch(handleError);
+		.catch(handleError)
 }
 
 async function checkout (stripe,cart) {

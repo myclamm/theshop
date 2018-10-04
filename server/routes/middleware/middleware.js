@@ -29,10 +29,10 @@ module.exports = {
         }
     },
     authenticate: function () {
-        return true; //TODO: Implement
+        return true;
     },
     validate: function () {
-        return true; //TODO: Implement
+        return true;
     },
     errorHandler: function (app) {
         app.use(function (err, req, res, next) {

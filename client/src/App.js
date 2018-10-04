@@ -141,6 +141,7 @@ class App extends Component {
   componentWillMount() {
     API.getProducts()
       .then(res=>{
+				console.log('products',res.data)
         this.setState({products: res.data})
       })
   }
