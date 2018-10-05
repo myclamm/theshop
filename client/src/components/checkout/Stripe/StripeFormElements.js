@@ -8,7 +8,7 @@ import {
   PostalCodeElement,
   injectStripe} from 'react-stripe-elements';
 
-class FormElements extends Component {
+class StripeFormElements extends Component {
 
   render() {
     const { onSubmit, cart } = this.props;
@@ -35,4 +35,4 @@ class FormElements extends Component {
 }
 
 // injectStripe injects "Stripe Object" into this.props
-export default injectStripe(FormElements);
+export default injectStripe(StripeFormElements);

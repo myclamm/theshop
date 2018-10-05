@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import {Elements, StripeProvider} from 'react-stripe-elements';
 import {Segment, Dimmer, Loader, Image} from 'semantic-ui-react'
 
-import StripeFormElements from './FormElements';
-import API from '../../services/apiService';
+import StripeFormElements from './StripeFormElements';
+import API from '../../../services/apiService';
 
 class StripeCheckoutForm extends Component {
   constructor(props) {
