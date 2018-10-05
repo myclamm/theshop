@@ -8,14 +8,17 @@ const API = {
 function getProducts () {
 	// Returns a promise
 	return axios
-		.get('api/products')
+		.get('api/products') 
 		.catch(handleError)
 }
 
 async function checkout (stripe,cart) {
-	let { token } = await stripe.createToken({name: "Name"});
-	if (!token) {
-		return alert('Unable to verify credit card info. Please try again.')
+	// Create transaction token with card info (infers Element)
+	let { token, error } = await stripe.createToken();
+
+	if (error) {
+		alert('Unable to verify credit card info. Please try again.')
+		return null
 	}
 	return axios
 		.post('api/checkout', {

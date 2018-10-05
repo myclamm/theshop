@@ -34,23 +34,23 @@ class Checkout extends Component {
 
 		return (
 			<Modal isOpen={checkout.show} toggle={hideCheckout}>
-			<div className="modal-header">
-				<h2>Order Summary</h2>
-				<span onClick={this.backToCart} style={{cursor:"pointer",float:"right"}}>Back to Cart</span>
-			</div>
+				<div className="modal-header">
+					<h2>Order Summary</h2>
+					<span onClick={this.backToCart} style={{cursor:"pointer",float:"right"}}>Back to Cart</span>
+				</div>
+				<ModalBody>
+					{cart.items.length === 0 ? "Your cart is empty" :null  }
+					<CartItems items={ cart.items } removeFromCart={ removeFromCart } removable="true"/>
+					<Divider/>
+					<div style={{textAlign:"right"}}>Total: ${ cart.total }</div>
+					<Divider/>
 
-			<ModalBody>
-				{cart.items.length === 0 ? "Your cart is empty" :null  }
-				<CartItems items={ cart.items } removeFromCart={ removeFromCart } removable="true"/>
-				<Divider/>
-				<div style={{textAlign:"right"}}>Total: ${ cart.total }</div>
-				<Divider/>
-				<StripeCheckoutForm cart={ cart } hideCheckout={ hideCheckout } checkoutHandler={ this.checkoutHandler } />
-			</ModalBody>
-
-			<ModalFooter>
-			</ModalFooter>
-
+					<div style={{width:"70%"}}>
+						<StripeCheckoutForm cart={ cart } hideCheckout={ hideCheckout } checkoutHandler={ this.checkoutHandler } />
+					</div>
+					
+				</ModalBody>
+				<ModalFooter></ModalFooter>
 			</Modal>
 		)
 	}

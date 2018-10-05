@@ -1,21 +1,14 @@
-## Basic Overview  - [Live Demo](link)
+## Basic Overview  - [Live Demo](https://serene-sands-49936.herokuapp.com/)
 
-Simple shopping cart app with checkout functionality using Stripe.
-
-
-#### Features
-
-
+Simple ecommerce app with checkout functionality.
+ 
 #### Using
 - React
-  * Redux - for application state management
 - Nodejs
   * Express
-  * Webpack
 - MongoDB
   * Mongoose
   
-
 ## Getting started
 
 #### Requirements
@@ -23,7 +16,7 @@ Simple shopping cart app with checkout functionality using Stripe.
 - Node.js
 - NPM
 
-### Dev Setup
+### Setup
 
 Install dependencies for server
 ``` bash
@@ -45,7 +38,7 @@ When done...
 - React client will run on http://localhost:3000
 - Hot module reload is enabled on react client for development via webpack
 
-You shouldn't need to, but if you want to run the API Server and React Client separately, you can do so:
+You shouldn't need to, but if you want to run the API Server and React Client with separately, you can do so:
 ```bash
 npm run server
 npm run client

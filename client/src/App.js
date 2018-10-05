@@ -110,8 +110,6 @@ class App extends Component {
     state.thankYou.purchasedItems = purchasedItems;
 		state.thankYou.confirmationId = confirmationId;
 		state.thankYou.total = total;
-		console.log('confirmationId:',confirmationId)
-		console.log('purchasedItems', purchasedItems)
     this.setState(state);
 	}
 	

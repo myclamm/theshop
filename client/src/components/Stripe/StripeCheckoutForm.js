@@ -25,23 +25,30 @@ class StripeCheckoutForm extends Component {
     };
   }
 
-  stripeCheckout(stripe, cart, callback) {
-    // If currently processing, do nothing
+  stripeCheckout(stripe, cart, checkoutHandler) {
+    // Prevent click spam
     if (this.state.processing) {
       return
     }
-
+    // Start spinner
     this.setState({processing:true});
+
+    // Generate stripe charge on server
     API.checkout(stripe,cart)
       .then(res => {
+        // Stop spinner
         this.setState({processing:false})
+        
+        // If tokenization failed return early
+        if (!res) return
 
+        // 
         if (res.status !== 200) {
-          callback(res.message);
+          checkoutHandler(res.message);
         } else {
           const confirmationId = res.data.charge.id
           const total = res.data.charge.amount / 100
-          callback(null, confirmationId, cart, total);
+          checkoutHandler(null, confirmationId, cart, total);
         }
       })
   }
@@ -52,7 +59,6 @@ class StripeCheckoutForm extends Component {
 
     return (
       <StripeProvider 
-        style={{marginRight:"20%"}}
         apiKey="pk_test_URHVeGrMAhyRcedLv3pL1gTE">
         <div className="example">
         

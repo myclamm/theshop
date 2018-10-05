@@ -16,6 +16,7 @@ class FormElements extends Component {
       <div className="checkout">
         <h2>Checkout</h2>
         <p>Fill out the form below to complete your purchase.</p>
+
         <small>Credit Card Number</small>
         <div className="checkout-form"><CardNumberElement/></div>
         <small>Expiration Date</small>
