@@ -20,6 +20,7 @@ class App extends Component {
     // Global App state, separated by components
     this.state = {
       products: [],
+      charges: [],
 
       cart: {
         total: 0,
@@ -141,6 +142,12 @@ class App extends Component {
       .then(res=>{
         this.setState({products: res.data})
       })
+    
+    API.getCharges()
+      .then(res=>{
+        console.log('charges',res.data.charges.data)
+        this.setState({charges: res.data.charges.data})
+      })
   }
 
   render() {
@@ -165,7 +172,8 @@ class App extends Component {
               showThankYou={ this.showThankYou } />
             <ThankYou 
               thankYou={ this.state.thankYou }
-              hideThankYou={ this.hideThankYou } />
+              hideThankYou={ this.hideThankYou } 
+              charges={ this.state.charges }/>
             <Navbar 
               showCart={ this.showCart }/>
             <Route exact path="/" render={(props) => 

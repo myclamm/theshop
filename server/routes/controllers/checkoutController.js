@@ -18,10 +18,17 @@ const CheckoutController = {
 		}
 
 		// Initiate Stripe Checkout
-		stripeService.createCharge(chargeObj, (err, charge) => {
-			if (err) return next()
-			return res.send({charge:charge})
+		const charge = stripeService.createCharge(chargeObj)
+
+		charge
+		.then((data)=>{
+			res.send({charge:data})
 		})
+		.catch((err)=>{
+			next(err)
+		})
+		// console.log('charge',charge)
+		// res.send({charge:charge});
 
 	}
 };

@@ -2,13 +2,21 @@ import axios from 'axios';
 
 const API = {
 	getProducts: getProducts,
-	checkout: checkout
+	checkout: checkout,
+	getCharges: getCharges
 }
 
 function getProducts () {
 	// Returns a promise
 	return axios
 		.get('api/products') 
+		.catch(handleError)
+}
+
+function getCharges() {
+	// Returns a promise
+	return axios
+		.get('api/getCharges') 
 		.catch(handleError)
 }
 
